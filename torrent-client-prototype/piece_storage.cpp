@@ -37,6 +37,7 @@ void PieceStorage::PieceProcessed(const PiecePtr& piece) {
     // хз, что будет если пир постоянно будет отправлять бракованный кусок,peer_connect будет же крутиться в бесконечном цикле
     std::lock_guard lock(mutex_);
     if (!piece->HashMatches()) {
+        // TODO: bug in last piece, but all piece downloaded and common hash of file is correct
         piece->Reset();
         std::cerr << "Piece " << piece->GetIndex() << " hash doesn't match" << std::endl;
         remainPieces_.push(piece);
