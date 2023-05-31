@@ -10,6 +10,7 @@ PieceStorage::PieceStorage(const TorrentFile& tf, const std::filesystem::path& o
     out_.seekp(tf.length - 1);
     out_.write("\0", 1);
     std::cout << "OPENED STREAM: " << out_.is_open() << std::endl;
+    if (!out_.is_open()) throw std::runtime_error("Output stream is not open");
     std::cout << "NAME IS " << tf_.name << std::endl;
     for (size_t i = 0; i < countOfPieces_; ++i) {
         size_t length = (i == tf.length / tf.pieceLength - 1) ? tf.length % tf.pieceLength : tf.pieceLength;

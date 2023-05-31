@@ -140,56 +140,53 @@ void PrepareTorrentFile(const fs::path& file) {
         return;
     }
     PieceStorage pieces(torrentFile, outputDirectory, PiecesToDownload);
-
+    
     DownloadTorrentFile(torrentFile, pieces, PeerId);
     std::cout << "Downloaded" << std::endl;
 }
 int main(int argc, char* argv[]) {
-//    std::string path1;
-//    int number;
-//    std::string path2;
-//
-//    if (argc < 6) {
-//        std::cout << "Not enough arguments" << std::endl;
-//        return 1;
-//    }
-//
-//    for (int i = 1; i < argc; ++i) {
-//        std::string arg = argv[i];
-//        if (arg == "-d") {
-//            if (i + 1 < argc) {
-//                path1 = argv[i + 1];
-//                i++;
-//            } else {
-//                std::cout << "Incorrect arguments" << std::endl;
-//                return 1;
-//            }
-//        } else if (arg == "-p") {
-//            if (i + 1 < argc) {
-//                try {
-//                    number = std::stoi(argv[i + 1]);
-//                } catch (const std::exception& e) {
-//                    std::cout << "Incorrect arguments" << std::endl;
-//                    return 1;
-//                }
-//                i++;
-//            } else {
-//                std::cout << "Incorrect arguments!" << std::endl;
-//                return 1;
-//            }
-//        } else {
-//            path2 = arg;
-//        }
-//    }
-//
-//    std::cout << "Path1: " << path1 << std::endl;
-//    std::cout << "Percents: " << number << std::endl;
-//    std::cout << "Path2: " << path2 << std::endl;
-    percents = 100;
-    outputDirectory = "../result";
-    PrepareTorrentFile("../../test-resources/debian-9.3.0-ppc64el-netinst.torrent");
-//    percents = number;
-//    outputDirectory = path1;
-//    PrepareTorrentFile(path2);
+    std::string path1;
+    int number;
+    std::string path2;
+
+    if (argc < 6) {
+        std::cout << "Not enough arguments" << std::endl;
+        return 1;
+    }
+
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "-d") {
+            if (i + 1 < argc) {
+                path1 = argv[i + 1];
+                i++;
+            } else {
+                std::cout << "Incorrect arguments" << std::endl;
+                return 1;
+            }
+        } else if (arg == "-p") {
+            if (i + 1 < argc) {
+                try {
+                    number = std::stoi(argv[i + 1]);
+                } catch (const std::exception& e) {
+                    std::cout << "Incorrect arguments" << std::endl;
+                    return 1;
+                }
+                i++;
+            } else {
+                std::cout << "Incorrect arguments!" << std::endl;
+                return 1;
+            }
+        } else {
+            path2 = arg;
+        }
+    }
+
+    std::cout << "Path1: " << path1 << std::endl;
+    std::cout << "Percents: " << number << std::endl;
+    std::cout << "Path2: " << path2 << std::endl;
+    percents = number;
+    outputDirectory = path1;
+    PrepareTorrentFile(path2);
     return 0;
 }
