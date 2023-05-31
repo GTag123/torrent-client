@@ -120,6 +120,31 @@ void PeerConnect::Terminate() {
         pieceStorage_.AddPieceToQueue(pieceInProgress_);
         pieceInProgress_ = nullptr;
     }
+    socket_.CloseConnection();
+}
+
+void PeerConnect::ReRun() {
+    if (!terminated_) return;
+    while (pieceInProgress_ != nullptr){}
+    failed_ = false;
+    pendingBlock_ = false;
+    terminated_ = false;
+    bool tryAgain = true;
+    int attempts = 0;
+    do {
+        try {
+            ++attempts;
+            this->Run();
+        } catch (const std::runtime_error& e) {
+            std::cerr << "Runtime error in ReRun: " << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "Exception in ReRun: " << e.what() << std::endl;
+        } catch (...) {
+            std::cerr << "Unknown error in ReRun" << std::endl;
+        }
+        tryAgain = this->Failed() && attempts < 3;
+    } while (tryAgain);
+    std::cout << "ReRuned connect finished\n" << std::flush;
 }
 
 void PeerConnect::MainLoop() {

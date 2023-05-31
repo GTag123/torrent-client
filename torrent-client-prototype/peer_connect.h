@@ -56,6 +56,11 @@ public:
      * Соединение не удалось установить или оно было разорвано в результате ошибки.
      */
     bool Failed() const;
+
+    // реконнект к пиру, если он terminated
+    void ReRun();
+
+
     const Peer& peerinfo;
 private:
     std::atomic<int>& peerscounter_;
